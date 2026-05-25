@@ -6,7 +6,7 @@ using TMPro;
 public class UIManager : MonoBehaviour
 {
     public TextMeshProUGUI textoscore;
-    public TextMeshProUGUI texto;
+    public TextMeshProUGUI textoTiempo;
 
     void Start()
     {
@@ -15,5 +15,10 @@ public class UIManager : MonoBehaviour
         public void UpdateScore(int score){
             textoscore.text = "Score: " + score.ToString();
         }
+
+        public void UpdateTime(float tiempo)
+    {
+            textoTiempo.text = "Tiempo: " + tiempo.ToString("F2");
+    }
 
 }

@@ -7,18 +7,20 @@ public class InteractionArea : MonoBehaviour
  {
     public int score = 0;
     public UIManager uiManagerScript;
+    public GameManager gameManager;
     
     void Awake()
     {
         uiManagerScript = GameObject.FindObjectOfType<UIManager>();
+        gameManager = GameObject.FindObjectOfType<GameManager>();
     } 
 
     void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.CompareTag("Collectible")){
+        if(other.gameObject.CompareTag("Collectible"))
+        {
             Destroy(other.gameObject);
-            score ++;
-            uiManagerScript.UpdateScore(score);
+            gameManager.AddScore();
         }
     }
 }
