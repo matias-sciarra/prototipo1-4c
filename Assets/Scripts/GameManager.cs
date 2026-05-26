@@ -1,49 +1,76 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     public int score = 0;
     public int maxscore = 4;
+
     public float tiempo = 30f;
+
     public UIManager uiManagerScript;
-    
+
+    private bool juegoTerminado = false;
+
     void Start()
     {
-    uiManagerScript = GameObject.FindObjectOfType<UIManager>();
+        Time.timeScale = 1;
 
-    uiManagerScript.UpdateScore(score);
-    uiManagerScript.UpdateTime(tiempo);
+        uiManagerScript = GameObject.FindObjectOfType<UIManager>();
+
+        uiManagerScript.UpdateScore(score);
+        uiManagerScript.UpdateTime(tiempo);
     }
 
-    
     void Update()
     {
-        tiempo -= Time.deltaTime;
+        // reiniciar con R
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            Time.timeScale = 1;
 
-        uiManagerScript.UpdateTime(tiempo);
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
+
+        // si terminó el juego, no seguir
+        if (juegoTerminado)
+        {
+            return;
+        }
+
+        // timer
+        tiempo -= Time.deltaTime;
 
         if (tiempo <= 0)
         {
-            Debug.Log("Loss");
             tiempo = 0;
 
+            juegoTerminado = true;
+
+            uiManagerScript.MostrarPantallaGameOver();
+
+            Time.timeScale = 0;
         }
 
-    uiManagerScript.UpdateTime(tiempo);
+        uiManagerScript.UpdateTime(tiempo);
 
+        // win
         if (score >= maxscore)
         {
-            Debug.Log("Win");
-        }
+            juegoTerminado = true;
 
+            uiManagerScript.MostrarPantallaWin();
+
+            Time.timeScale = 0;
+        }
     }
 
     public void AddScore()
     {
-    score ++;
-    uiManagerScript.UpdateScore(score);
-}
+        score++;
 
+        uiManagerScript.UpdateScore(score);
+    }
 }
