@@ -23,7 +23,7 @@ public class UIManager : MonoBehaviour
 
     public void UpdateTime(float tiempo)
     {
-        textoTiempo.text = "Tiempo: " + tiempo.ToString("F2");
+        textoTiempo.text = "Tiempo: " + tiempo.ToString("F2") + " s ";
     }
 
     public void MostrarPantallaWin()
